@@ -19,7 +19,32 @@
 const HANDS = String.fromCodePoint(0x1f44f);
 var textArea = document.getElementById("text");
 var result = document.getElementById("result");
+var copyButton = document.getElementById("copy-button");
+var didCopySpan = document.getElementById("did-copy");
+var oldCopy = document.oncopy;
+var handsText = "";
 
 textArea.addEventListener("input", function() {
-	result.innerHTML = textArea.value.toUpperCase().replace(/[\b\s\.\,]+/g, HANDS);
+  handsText = textArea.value.toUpperCase().replace(/[\b\s\.\,]+/g, HANDS);
+  result.innerHTML = handsText;
 });
+
+function copyHandler(e) {
+  e.clipboardData.setData("text/plain", handsText);
+  e.preventDefault();
+  document.oncopy = oldCopy;
+
+  didCopySpan.style.display = 'inline';
+  didCopySpan.style.opacity = 1.0;
+  setTimeout(function() {
+    didCopySpan.style.opacity = 0.0;
+    setTimeout(function() {
+      didCopySpan.style.display = 'none';
+    }, 500);
+  }, 500);
+}
+
+copyButton.onclick = function() {
+  document.oncopy = copyHandler;
+  document.execCommand('copy');
+};
