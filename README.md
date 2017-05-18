@@ -11,7 +11,7 @@ So far, there's only one API endpoint, accessible at `/tr` or `/transform`. You 
 *Examples*
 
 ```
-GET /tr?text=no%20war%20but%20the%20class%20war&symbol=%E2%98%AD`
+GET /tr?text=no%20war%20but%20the%20class%20war&symbol=%E2%98%AD
 {"text": "NO☭WAR☭BUT☭THE☭CLASS☭WAR"}
 ```
 
