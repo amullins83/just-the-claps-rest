@@ -7,7 +7,7 @@
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  Just-the-Clpas is distributed in the hope that it will be useful,
+  Just-the-Claps is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -27,17 +27,44 @@ var justClapsTransform = function(text, symbol) {
   return text.toUpperCase().replace(/[\b\s\.\,]+/g, symbol);
 };
 
+
+if (typeof module != "undefined" && module) {
+  module.exports = justClapsTransform;
+}
+
 // Poor man's isomorphic Javascript
 if (typeof document != "undefined" && document) {
   var textArea = document.getElementById("text");
   var result = document.getElementById("result");
+  var copyButton = document.getElementById("copy-button");
+  var didCopySpan = document.getElementById("did-copy");
+  var oldCopy = document.oncopy;
+
   if (textArea && result) {
     textArea.addEventListener("input", function() {
       result.innerHTML = justClapsTransform(textArea.value);
     });
   }
+
+  if (copyButton) {
+    copyButton.onclick = function() {
+      document.oncopy = copyHandler;
+      document.execCommand('copy');
+    };
+  }
 }
 
-if (typeof module != "undefined" && module) {
-  module.exports = justClapsTransform;
+function copyHandler(e) {
+  e.clipboardData.setData("text/plain", result.innerText);
+  e.preventDefault();
+  document.oncopy = oldCopy;
+
+  didCopySpan.style.display = 'inline';
+  didCopySpan.style.opacity = 1.0;
+  setTimeout(function() {
+    didCopySpan.style.opacity = 0.0;
+    setTimeout(function() {
+      didCopySpan.style.display = 'none';
+    }, 500);
+  }, 500);
 }

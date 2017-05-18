@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.fadeInOut {
+	display: none;
+	opacity: 0;
+	transition: opacity 0.5s;
+	color: green;
+	position: relative;
+	margin-left: 1em;
+}
