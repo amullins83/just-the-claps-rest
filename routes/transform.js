@@ -16,28 +16,20 @@
   along with Just-the-Claps.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const HANDS = String.fromCodePoint(0x1f44f);
-var justClapsTransform = function(text, symbol) {
-  if (!text)
-    return "";
+var express = require('express');
+var router = express.Router();
+var path = require('path');
+var url = require('url');
+var justClapsTransform = require(path.join(__dirname, "..", "public", "javascripts", "just-claps"));
 
-  if (!symbol)
-    symbol = HANDS;
+/* GET transformed text */
+router.get('/', function(req, res, next) {
+  var query = url.parse(req.url, true).query; // Get query string as an object
+  res.json({text: justClapsTransform(query.text, query.symbol)});
+});
 
-  return text.toUpperCase().replace(/[\b\s\.\,]+/g, symbol);
-};
+router.post('/', function(req, res, next) {
+  res.json({text: justClapsTransform(req.body.text, req.body.symbol)});
+});
 
-// Poor man's isomorphic Javascript
-if (typeof document != "undefined" && document) {
-  var textArea = document.getElementById("text");
-  var result = document.getElementById("result");
-  if (textArea && result) {
-    textArea.addEventListener("input", function() {
-      result.innerHTML = justClapsTransform(textArea.value);
-    });
-  }
-}
-
-if (typeof module != "undefined" && module) {
-  module.exports = justClapsTransform;
-}
+module.exports = router;
