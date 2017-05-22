@@ -24,3 +24,8 @@ POST /transform
 
 {"text": "NO😠YOU😠DIDN'T"}
 ```
+
+Props
+-----
+
+The name of this project was inspired by Strong Bad's song from [Strong Bad Email #68 - Caper](https://www.youtube.com/watch?v=HBUP2jAPExU) by the Brothers Chapps.
