@@ -25,12 +25,19 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var transform = require('./routes/transform');
+var nunjucks = require("nunjucks");
 
 var app = express();
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'njk');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+nunjucks.configure("views", {
+  autoescape: true,
+  express: app
+});
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

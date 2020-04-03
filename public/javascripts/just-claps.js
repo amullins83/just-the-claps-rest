@@ -74,7 +74,7 @@ if (typeof document != "undefined" && document) {
     result.innerHTML = justClapsTransform(textArea.value, symbol);
   }
 
-  const SYMBOLS = ["👏", "👌", "🌈", "🌋", "🌠", "🌮", "🌹", "🍀", "💗"];
+  const SYMBOLS = ["👏", "🧼", "🌈", "🦠", "😷", "🤮", "🌹", "🧻", "💗"];
   var symbolElements = [];
   function makeSymbolElement(symbol) {
     var el = document.createElement("a");
